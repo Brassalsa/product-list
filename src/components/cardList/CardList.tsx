@@ -10,15 +10,17 @@ const CardList = ({
   productList: Product[];
   size?: number;
 }) => {
+  console.log(productList);
+
   return (
-    <>
-      <div className="flex flex-wrap justify-center items-center">
+    <section className="min-h-[100vh]">
+      <div className="flex flex-wrap justify-center items-center ">
         {productList?.map((product) => (
           <Card key={product.id} product={product} />
         ))}
       </div>
       <Paging size={size} />
-    </>
+    </section>
   );
 };
 

@@ -14,7 +14,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-rating-star-with-type": "^1.2.1",
-    "react-star-rating": "^1.4.2"
+    "react-star-rating": "^1.4.2",
+    "swr": "^2.2.4"
   },
   "devDependencies": {
     "@types/node": "^20",

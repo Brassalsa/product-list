@@ -1,12 +1,9 @@
+"use client";
+
 import { Product } from "@/types/types";
 import CardList from "@/components/cardList/CardList";
-
-type Filter = {
-  cat?: string;
-  page?: number;
-  range?: string;
-  sort?: string;
-};
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 function filterRange(arr: Product[], range: string) {
   const newRange = range.split(",");
@@ -41,7 +38,12 @@ async function fetchData() {
   return json;
 }
 
-async function processData({ cat = "", page = 0, range, sort }: Filter) {
+async function processData(searchParams: ReadonlyURLSearchParams) {
+  const cat = searchParams.get("cat");
+  const range = searchParams.get("range");
+  const sort = searchParams.get("sort");
+  const page = searchParams.get("page") || 0;
+
   const data = await fetchData();
   let result: Product[] = data;
   if (cat) {
@@ -53,24 +55,29 @@ async function processData({ cat = "", page = 0, range, sort }: Filter) {
   if (sort) {
     result = filterSort(result, sort);
   }
-  let retValue: [Product[], number] = [
-    result.slice(page * 5, page * 5 + 5),
-    data.length,
+  const retVal: [Product[], number] = [
+    result.slice(+page * 5, +page * 5 + 5),
+    result.length,
   ];
-  return retValue;
+  return retVal;
 }
 
-export default async function Home({ searchParams }: { searchParams: object }) {
-  const data = await processData({ ...searchParams });
-  let productList: Product[] = [];
-  let length = 0;
-  if (data.length > 0) {
-    productList = data[0];
-    length = data[1];
-  }
+export default async function Home() {
+  const searchParams = useSearchParams();
+  const [data, setData]: [Product[], Function] = useState([]);
+  const [size, setSize] = useState(0);
+  useEffect(() => {
+    const render = async () => {
+      const [data, size] = await processData(searchParams);
+      setData(data);
+      setSize(size);
+    };
+    render();
+  }, [searchParams.toString()]);
+
   return (
     <main className="max-w-7xl  mx-auto gap-2 justify-center px-3  overflow-hidden">
-      <CardList productList={productList} size={length} />
+      <CardList productList={data} size={size} />
     </main>
   );
 }
