@@ -13,4 +13,6 @@ Then, run the development server:
 npm run dev
 ```
 
+Deployed on Netlify(https://product-list-next.netlify.app/)
+
 
