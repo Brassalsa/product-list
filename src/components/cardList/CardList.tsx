@@ -13,7 +13,7 @@ const CardList = ({
   console.log(productList);
 
   return (
-    <section className="min-h-[100vh]">
+    <section className="min-h-[80vh] flex flex-col justify-between">
       <div className="flex flex-wrap justify-center items-center ">
         {productList?.map((product) => (
           <Card key={product.id} product={product} />

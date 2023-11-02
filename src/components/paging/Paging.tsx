@@ -21,7 +21,7 @@ const Paging = ({ size = Infinity }: { size?: number }) => {
     router.push("?" + params.toString());
   }
   return (
-    <div className="flex gap-4 mx-auto justify-center py-5 absolute bottom-1 right-[40%]">
+    <div className="flex gap-4 mx-auto justify-center py-5 ">
       <button
         className="bg-slate-500 text-white px-4 py-2 
        rounded-md hover:bg-slate-400 disabled:opacity-0"
